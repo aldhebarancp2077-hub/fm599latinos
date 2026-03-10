@@ -52,17 +52,23 @@ body {
     box-shadow: 0 0 20px #ff4b2b;
 }
 
-/* Contenedor del Chat Minnit */
+/* Contenedor del Chat Minnit Reparado */
 .chat-container {
     width: 95%;
     max-width: 500px;
-    height: 500px; /* Un poco más de altura para Minnit */
+    min-height: 500px;
     background: #000;
     border: 2px solid #ff4b2b;
     border-radius: 8px;
     box-shadow: 0 0 20px rgba(255, 75, 43, 0.3);
-    overflow: hidden;
     margin-bottom: 20px;
+    padding: 10px 0;
+    overflow: hidden;
+}
+
+/* Ajuste para que el widget de Minnit no se salga del cuadro */
+.minnit-chat-sembed {
+    margin: 0 auto !important;
 }
 
 .footer {
@@ -76,6 +82,8 @@ body {
     top: -9999px;
     left: -9999px;
 }
+
+.powered-by-minnit { display: none; } /* Ocultamos el link de texto para que quede más limpio */
 </style>
 </head>
 
@@ -88,9 +96,11 @@ body {
 <button class="play-btn" id="ctrl-btn">▶ ESCUCHAR</button>
 
 <div class="chat-container">
-    <iframe src="https://minnit.chat/167426399853754?embed&nickname=" 
-            style="border:none; width:100%; height:100%;" 
-            allowTransparency="true"></iframe>
+    <script src="https://minnit.chat/js/embed.js?c=1772345192" defer></script>
+    <span style="display: none;" class="minnit-chat-sembed" 
+          data-chatname="https://organizations.minnit.chat/167426399853754/c/Main?embed" 
+          data-style="width:100%; height:500px;" 
+          data-version="1.55">Chat</span>
 </div>
 
 <div id="player"></div>
@@ -130,10 +140,8 @@ FM 59.9 LATINOS — Música sin límites
     btn.addEventListener('click', () => {
       if (!isPlaying) {
         player.setShuffle(true);
-        // Generamos un número al azar para que la radio empiece en cualquier punto
         var randomTrack = Math.floor(Math.random() * 80);
         player.playVideoAt(randomTrack);
-        
         btn.textContent = '⏸ PAUSAR';
         isPlaying = true;
       } else {
@@ -145,7 +153,6 @@ FM 59.9 LATINOS — Música sin límites
   }
 
   function onPlayerStateChange(event) {
-    // Si termina una canción, saltamos a otra al azar
     if (event.data === YT.PlayerState.ENDED) {
         var nextRandom = Math.floor(Math.random() * 80);
         player.playVideoAt(nextRandom);
