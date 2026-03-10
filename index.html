@@ -11,7 +11,7 @@ body {
     text-align: center;
     font-family: Arial, sans-serif;
     margin: 0;
-    padding: 20px 0; /* Espacio para que no se pegue al borde */
+    padding: 20px 0;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -52,20 +52,16 @@ body {
     box-shadow: 0 0 20px #ff4b2b;
 }
 
-/* Contenedor del Chat */
-<div class="chat-container">
-    <iframe src="https://wwws.cbox.ws/box/?boxid=954497&boxtag=ALDHEBARAN" 
-            width="100%" 
-            height="450" 
-            allowtransparency="yes" 
-            allow="autoplay" 
-            frameborder="0" 
-            marginwidth="0" 
-            marginheight="0" 
-            scrolling="auto"
-            style="border:none;">
-    </iframe>
-</div>
+.chat-container {
+    width: 95%;
+    max-width: 500px;
+    height: 450px;
+    background: #000;
+    border: 2px solid #ff4b2b;
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(255, 75, 43, 0.3);
+    overflow: hidden;
+}
 
 .footer {
     margin-top: 40px;
@@ -74,7 +70,6 @@ body {
     font-size: 14px;
 }
 
-/* Ocultamos el reproductor de YouTube */
 #player {
     position: absolute;
     top: -9999px;
@@ -92,7 +87,16 @@ body {
 <button class="play-btn" id="ctrl-btn">▶ ESCUCHAR</button>
 
 <div class="chat-container">
-    <iframe src="https://wwws.cbox.ws/box/?boxid=954497&boxtag=ALDHEBARAN" width="100%" height="450" allowtransparency="yes" allow="autoplay" frameborder="0" marginwidth="0" marginheight="0" scrolling="auto"></iframe>
+    <iframe src="https://wwws.cbox.ws/box/?boxid=954497&boxtag=ALDHEBARAN" 
+            width="100%" 
+            height="100%" 
+            allowtransparency="yes" 
+            allow="autoplay" 
+            frameborder="0" 
+            marginwidth="0" 
+            marginheight="0" 
+            scrolling="auto">
+    </iframe>
 </div>
 
 <div id="player"></div>
@@ -106,7 +110,6 @@ FM 59.9 LATINOS — Música sin límites
   var isPlaying = false;
   const btn = document.getElementById('ctrl-btn');
 
-  // Cargamos la API de YouTube de forma asíncrona
   var tag = document.createElement('script');
   tag.src = "https://www.youtube.com/iframe_api";
   var firstScriptTag = document.getElementsByTagName('script')[0];
@@ -118,9 +121,9 @@ FM 59.9 LATINOS — Música sin límites
       width: '0',
       playerVars: {
         'listType': 'playlist',
-        'list': 'PLe6c5G06CUoTXYz79PaJfvyiUlfnHJMsV', 
+        'list': 'PLe6c5G06CUoTXYz79PaJfvyiUlfnHJMsV',
         'loop': 1,
-        'shuffle': 1, 
+        'shuffle': 1,
         'controls': 0,
         'showinfo': 0,
         'rel': 0
@@ -135,8 +138,11 @@ FM 59.9 LATINOS — Música sin límites
   function onPlayerReady(event) {
     btn.addEventListener('click', () => {
       if (!isPlaying) {
-        player.playVideo();
+        // ACTIVAR SHUFFLE REAL:
         player.setShuffle(true);
+        // Saltamos a un video al azar para romper el orden de la A a la Z
+        player.playVideoAt(Math.floor(Math.random() * 80)); 
+        
         btn.textContent = '⏸ PAUSAR';
         isPlaying = true;
       } else {
@@ -154,5 +160,7 @@ FM 59.9 LATINOS — Música sin límites
   }
 </script>
 
+</body>
+</html>
 </body>
 </html>
