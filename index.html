@@ -52,6 +52,7 @@ body {
     box-shadow: 0 0 20px #ff4b2b;
 }
 
+/* Contenedor del Chat con altura fija para que no desaparezca */
 .chat-container {
     width: 95%;
     max-width: 500px;
@@ -60,12 +61,11 @@ body {
     border: 2px solid #ff4b2b;
     border-radius: 8px;
     box-shadow: 0 0 20px rgba(255, 75, 43, 0.3);
-    overflow: hidden;
+    margin-bottom: 20px;
 }
 
 .footer {
-    margin-top: 40px;
-    margin-bottom: 20px;
+    margin-top: 20px;
     color: #777;
     font-size: 14px;
 }
@@ -87,16 +87,7 @@ body {
 <button class="play-btn" id="ctrl-btn">▶ ESCUCHAR</button>
 
 <div class="chat-container">
-    <iframe src="https://wwws.cbox.ws/box/?boxid=954497&boxtag=ALDHEBARAN" 
-            width="100%" 
-            height="100%" 
-            allowtransparency="yes" 
-            allow="autoplay" 
-            frameborder="0" 
-            marginwidth="0" 
-            marginheight="0" 
-            scrolling="auto">
-    </iframe>
+    <iframe src="https://wwws.cbox.ws/box/?boxid=954497&boxtag=ALDHEBARAN" width="100%" height="450" allowtransparency="yes" frameborder="0" marginwidth="0" marginheight="0" scrolling="auto"></iframe>
 </div>
 
 <div id="player"></div>
@@ -123,14 +114,11 @@ FM 59.9 LATINOS — Música sin límites
         'listType': 'playlist',
         'list': 'PLe6c5G06CUoTXYz79PaJfvyiUlfnHJMsV',
         'loop': 1,
-        'shuffle': 1,
-        'controls': 0,
-        'showinfo': 0,
-        'rel': 0
+        'index': Math.floor(Math.random() * 80), // Empieza en una posición al azar
+        'autoplay': 0
       },
       events: {
-        'onReady': onPlayerReady,
-        'onStateChange': onPlayerStateChange
+        'onReady': onPlayerReady
       }
     });
   }
@@ -138,10 +126,11 @@ FM 59.9 LATINOS — Música sin límites
   function onPlayerReady(event) {
     btn.addEventListener('click', () => {
       if (!isPlaying) {
-        // ACTIVAR SHUFFLE REAL:
+        // Forzamos el shuffle y play
         player.setShuffle(true);
-        // Saltamos a un video al azar para romper el orden de la A a la Z
-        player.playVideoAt(Math.floor(Math.random() * 80)); 
+        // Saltamos a una canción al azar de la lista
+        var randomTrack = Math.floor(Math.random() * 80);
+        player.playVideoAt(randomTrack);
         
         btn.textContent = '⏸ PAUSAR';
         isPlaying = true;
@@ -152,15 +141,7 @@ FM 59.9 LATINOS — Música sin límites
       }
     });
   }
-
-  function onPlayerStateChange(event) {
-    if (event.data === YT.PlayerState.ENDED) {
-        player.nextVideo();
-    }
-  }
 </script>
 
-</body>
-</html>
 </body>
 </html>
