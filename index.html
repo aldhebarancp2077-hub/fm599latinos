@@ -1,71 +1,138 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
 <title>FM 59.9 Latinos</title>
 <meta charset="UTF-8">
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
-
-body{
-background: linear-gradient(180deg,#050505,#0a0a12,#000000);
-color:white;
-text-align:center;
-font-family:Arial;
-margin:0;
-padding:0;
+body {
+    background: linear-gradient(180deg,#050505,#0a0a12,#000000);
+    color: white;
+    text-align: center;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
-.logo{
-margin-top:80px;
-width:520px;
-filter: drop-shadow(0 0 15px #ff4b2b);
+.logo {
+    width: 90%;
+    max-width: 520px;
+    filter: drop-shadow(0 0 15px #ff4b2b);
+    margin-bottom: 20px;
 }
 
-.radio-title{
-font-size:26px;
-letter-spacing:6px;
-margin-top:25px;
-color:#ccc;
+.radio-title {
+    font-size: 26px;
+    letter-spacing: 6px;
+    color: #ccc;
+    margin-bottom: 30px;
 }
 
-.play-btn{
-margin-top:40px;
-font-size:20px;
-padding:14px 40px;
-background:transparent;
-border:2px solid #ff4b2b;
-border-radius:6px;
-color:white;
-cursor:pointer;
-transition:0.3s;
+.play-btn {
+    font-size: 20px;
+    padding: 14px 40px;
+    background: transparent;
+    border: 2px solid #ff4b2b;
+    border-radius: 6px;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+    text-transform: uppercase;
 }
 
-.play-btn:hover{
-background:#ff4b2b;
-box-shadow:0 0 15px #ff4b2b;
+.play-btn:hover {
+    background: #ff4b2b;
+    box-shadow: 0 0 20px #ff4b2b;
 }
 
-.footer{
-margin-top:80px;
-color:#777;
-font-size:14px;
+.footer {
+    margin-top: 60px;
+    color: #777;
+    font-size: 14px;
 }
 
+/* Ocultamos el reproductor de YouTube */
+#player {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+}
 </style>
-
 </head>
 
 <body>
 
-<img src="fm 59.9 latinos.png" class="logo">
+<img src="fm 59.9 latinos.png" class="logo" alt="Logo FM 59.9">
 
 <div class="radio-title">RADIO EN VIVO</div>
 
-<button class="play-btn">▶ ESCUCHAR</button>
+<button class="play-btn" id="ctrl-btn">▶ ESCUCHAR</button>
+
+<div id="player"></div>
 
 <div class="footer">
 FM 59.9 LATINOS — Música sin límites
 </div>
+
+<script>
+  var player;
+  var isPlaying = false;
+  const btn = document.getElementById('ctrl-btn');
+
+  // Cargamos la API de YouTube de forma asíncrona
+  var tag = document.createElement('script');
+  tag.src = "https://www.youtube.com/iframe_api";
+  var firstScriptTag = document.getElementsByTagName('script')[0];
+  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+  function onYouTubeIframeAPIReady() {
+    player = new YT.Player('player', {
+      height: '0',
+      width: '0',
+      playerVars: {
+        'listType': 'playlist',
+        'list': 'PLe6c5G06CUoTXYz79PaJfvyiUlfnHJMsV', // Tu Playlist
+        'loop': 1,
+        'shuffle': 1, // Para que sea aleatorio cada vez
+        'controls': 0,
+        'showinfo': 0,
+        'rel': 0
+      },
+      events: {
+        'onReady': onPlayerReady,
+        'onStateChange': onPlayerStateChange
+      }
+    });
+  }
+
+  function onPlayerReady(event) {
+    btn.addEventListener('click', () => {
+      if (!isPlaying) {
+        player.playVideo();
+        // A veces el shuffle se activa mejor después de iniciar
+        player.setShuffle(true);
+        btn.textContent = '⏸ PAUSAR';
+        isPlaying = true;
+      } else {
+        player.pauseVideo();
+        btn.textContent = '▶ ESCUCHAR';
+        isPlaying = false;
+      }
+    });
+  }
+
+  // Si la canción termina, que siga la siguiente (loop de playlist)
+  function onPlayerStateChange(event) {
+    if (event.data === YT.PlayerState.ENDED) {
+        player.nextVideo();
+    }
+  }
+</script>
 
 </body>
 </html>
