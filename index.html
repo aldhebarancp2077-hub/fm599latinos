@@ -52,7 +52,6 @@ body {
     box-shadow: 0 0 20px #ff4b2b;
 }
 
-/* Contenedor del Chat Minnit Reparado */
 .chat-container {
     width: 95%;
     max-width: 500px;
@@ -66,15 +65,63 @@ body {
     overflow: hidden;
 }
 
-/* Ajuste para que el widget de Minnit no se salga del cuadro */
 .minnit-chat-sembed {
     margin: 0 auto !important;
 }
 
-.footer {
+/* Sección de Información de Pista y Créditos */
+.info-section {
     margin-top: 20px;
-    color: #777;
+    width: 95%;
+    max-width: 500px;
+    background: rgba(10, 10, 18, 0.8);
+    border: 1px solid #333;
+    border-top: 2px solid #ff4b2b;
+    border-radius: 4px;
+    padding: 20px;
+    font-size: 13px;
+    text-align: left;
+    color: #bbb;
+}
+
+.info-section h3 {
+    color: #ff4b2b;
     font-size: 14px;
+    margin: 0 0 15px 0;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.info-section p {
+    margin: 8px 0;
+    line-height: 1.4;
+}
+
+.info-section strong {
+    color: #fff;
+}
+
+.info-section a {
+    color: #ff4b2b;
+    text-decoration: none;
+}
+
+.info-section a:hover {
+    text-decoration: underline;
+}
+
+.usage-box {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px hide #333;
+    border-top: 1px solid rgba(255, 75, 43, 0.2);
+}
+
+.footer {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    color: #555;
+    font-size: 12px;
 }
 
 #player {
@@ -83,7 +130,7 @@ body {
     left: -9999px;
 }
 
-.powered-by-minnit { display: none; } /* Ocultamos el link de texto para que quede más limpio */
+.powered-by-minnit { display: none; }
 </style>
 </head>
 
@@ -101,6 +148,21 @@ body {
           data-chatname="https://organizations.minnit.chat/167426399853754/c/Main?embed" 
           data-style="width:100%; height:500px;" 
           data-version="1.55">Chat</span>
+</div>
+
+<div class="info-section">
+    <h3>Track Information</h3>
+    <p><strong>Track Title:</strong> (AldheBaran Version)</p>
+    <p><strong>Producer:</strong> AldheBaran</p>
+    <p><strong>YouTube:</strong> <a href="https://www.youtube.com/@AldheBaranCP2077" target="_blank">@AldheBaranCP2077</a></p>
+    <p><strong>Nexus Mods:</strong> <a href="https://www.nexusmods.com/users/130107773" target="_blank">AldheBaraan</a></p>
+    
+    <div class="usage-box">
+        <h3>Usage Policy</h3>
+        <p><strong>Uso No Comercial:</strong> Libre para usar en tus videos de YouTube o mods de Cyberpunk 2077. Requiere crédito obligatorio.</p>
+        <p><strong>Uso Comercial:</strong> Por favor, contactame para obtener permiso si planeas monetizar contenido usando este track.</p>
+        <p><strong>Prohibido:</strong> No re-subir el audio como pista independiente.</p>
+    </div>
 </div>
 
 <div id="player"></div>
